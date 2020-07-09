@@ -17,7 +17,6 @@ module.exports = {
     '@babel/preset-typescript',
   ],
   plugins: [
-    'babel-plugin-idx',
     ['@babel/plugin-proposal-class-properties', { loose: true }],
     '@babel/plugin-proposal-export-default-from',
     '@babel/plugin-proposal-export-namespace-from',
