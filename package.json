@@ -1,0 +1,84 @@
+{
+  "name": "mission",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Repository with example using React, NodeJS, MongoDB, Koa",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AugustoCalaca/mission"
+  },
+  "license": "MIT",
+  "author": "Augusto Calaca",
+  "main": "index.js",
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "scripts": {
+    "b": "babel-node --extensions \".es6,.js,.es,.jsx,.mjs,.ts,.tsx\"",
+    "delete:all": "yarn delete:build && yarn delete:dist && yarn delete:generated && yarn delete:metro-cache && yarn delete:node_modules",
+    "delete:build": "find . -name \"build\" -exec rm -rf '{}' +",
+    "delete:dist": "find . -name \"dist\" -exec rm -rf '{}' +",
+    "delete:node_modules": "find . -name \"node_modules\" -exec rm -rf '{}' +",
+    "delete:yarn.lock": "find . -name \"yarn.lock\" -exec rm -rf '{}' +",
+    "lint": "eslint --fix --ext .js,.ts,.tsx",
+    "lint:ci": "eslint --quiet --ext .js,.ts,.tsx .",
+    "lint:fix": "eslint --fix --ext .js,.ts,.tsx .",
+    "prettier": "prettier",
+    "seed": "yarn workspace @mission/server seed",
+    "server:build": "yarn workspace @mission/server build",
+    "server:start": "yarn workspace @mission/server start",
+    "server:test": "yarn workspace @mission/server test",
+    "web:start": "yarn workspace @mission/web start",
+    "startup": "./scripts/startup.sh",
+    "test": "jest",
+    "typecheck": "tsc --pretty"
+  },
+  "lint-staged": {
+    "*.yml": [
+      "yarn prettier --write",
+      "git add"
+    ],
+    "*.{ts,tsx,js}": [
+      "yarn prettier --write",
+      "yarn lint",
+      "git add"
+    ],
+    "package.json": [
+      "yarn prettier --write",
+      "yarn sort-package-json",
+      "git add"
+    ]
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@commitlint/cli": "^8.1.0",
+    "@commitlint/config-conventional": "^8.1.0",
+    "@react-native-community/eslint-config": "^1.1.0",
+    "@types/jest": "^25.2.1",
+    "@typescript-eslint/eslint-plugin": "^2.5.0",
+    "@typescript-eslint/parser": "^2.5.0",
+    "dotenv-safe": "8.2.0",
+    "eslint": "^7.0.0",
+    "eslint-config-airbnb": "18.1.0",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.15.1",
+    "eslint-plugin-react-hooks": "^4.0.2",
+    "husky": "^4.2.5",
+    "jest": "26.0.1",
+    "jest-cli": "26.0.1",
+    "lerna": "^3.17.0",
+    "lint-staged": "^10.2.2",
+    "prettier": "^2.0.5",
+    "sort-package-json": "1.42.2",
+    "typescript": "^3.6.3"
+  },
+  "peerDependencies": {
+    "lodash": "4.x"
+  }
+}
