@@ -65,9 +65,36 @@ describe('Test routes', () => {
     const course2 = await createCourse();
     const course1 = await createCourse();
 
-    const response = await request(server).get('/courses?page=2&pageSize=2').set('Accept', 'application/json');
-    expect(response.status).toEqual(200);
-    expect(response.body).toMatchObject({
+    const response1 = await request(server).get('/courses?page=1&pageSize=2').set('Accept', 'application/json');
+    expect(response1.status).toEqual(200);
+    expect(response1.body).toMatchObject({
+      status: 'OK',
+      courses: [
+        {
+          isActive: true,
+          title: course1.title,
+          subtitle: course1.subtitle,
+          description: course1.description,
+        },
+        {
+          isActive: true,
+          title: course2.title,
+          subtitle: course2.subtitle,
+          description: course2.description,
+        },
+      ],
+      pageInfo: {
+        errors: null,
+        page: 1,
+        totalCount: 5,
+        hasNextPage: true,
+        hasPreviousPage: false,
+      },
+    });
+
+    const response2 = await request(server).get('/courses?page=2&pageSize=2').set('Accept', 'application/json');
+    expect(response2.status).toEqual(200);
+    expect(response2.body).toMatchObject({
       status: 'OK',
       courses: [
         {
@@ -88,6 +115,27 @@ describe('Test routes', () => {
         page: 2,
         totalCount: 5,
         hasNextPage: true, // course5
+        hasPreviousPage: true,
+      },
+    });
+
+    const response3 = await request(server).get('/courses?page=3&pageSize=2').set('Accept', 'application/json');
+    expect(response3.status).toEqual(200);
+    expect(response3.body).toMatchObject({
+      status: 'OK',
+      courses: [
+        {
+          isActive: true,
+          title: course5.title,
+          subtitle: course5.subtitle,
+          description: course5.description,
+        },
+      ],
+      pageInfo: {
+        errors: null,
+        page: 3,
+        totalCount: 5,
+        hasNextPage: false,
         hasPreviousPage: true,
       },
     });
