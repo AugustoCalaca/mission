@@ -6,8 +6,8 @@ import { disconnectMongoose, connectMongoose, clearDbAndRestartCounters, createC
 beforeAll(connectMongoose);
 beforeEach(clearDbAndRestartCounters);
 afterAll(() => {
-  server.close();
   disconnectMongoose();
+  server.close();
 });
 
 describe('Test routes', () => {
@@ -146,10 +146,8 @@ describe('Test routes', () => {
     const course2 = await createCourse();
     const course3 = await createCourse({ title: 'finded' });
     const course4 = await createCourse();
-    console.log('course3', course3);
 
     const response = await request(server).get(`/courses/find`).query({ q: 'finded' });
-    console.log('respon', response.body.courses);
     expect(response.status).toEqual(200);
     expect(response.body).toMatchObject({
       status: 'OK',
@@ -189,33 +187,31 @@ describe('Test routes', () => {
   });
 
   it('route POST /courses', async () => {
-    const body = { course: { title: 'title', subtitle: 'subtitle', description: 'description' } };
+    const course = { title: 'title', subtitle: 'subtitle', description: 'description' };
 
-    const response = await request(server).post('/courses').send(body).set('Accept', 'application/json');
+    const response = await request(server).post('/courses').send(course).set('Accept', 'application/json');
     expect(response.status).toEqual(200);
     expect(response.body).toMatchObject({
       status: 'OK',
       message: 'Course successfully created',
       course: {
         isActive: true,
-        ...body.course,
+        ...course,
       },
     });
   });
 
   it('route POST /courses passing id and make your update', async () => {
     const newCourse = await createCourse();
-    const body = {
-      course: {
-        id: newCourse._id,
-        title: 'title updated',
-        subtitle: 'subtitle updated',
-        description: 'description updated',
-      },
+    const course = {
+      id: newCourse._id,
+      title: 'title updated',
+      subtitle: 'subtitle updated',
+      description: 'description updated',
     };
 
-    const response = await request(server).post('/courses').send(body).set('Accept', 'application/json');
-    delete body.course.id;
+    const response = await request(server).post('/courses').send(course).set('Accept', 'application/json');
+    delete course.id;
 
     expect(response.status).toEqual(200);
     expect(response.body).toMatchObject({
@@ -223,7 +219,7 @@ describe('Test routes', () => {
       message: 'Course successfully updated',
       course: {
         isActive: true,
-        ...body.course,
+        ...course,
       },
     });
   });

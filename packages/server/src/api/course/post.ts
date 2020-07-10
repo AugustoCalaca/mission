@@ -6,7 +6,7 @@ import { updateOrCreate } from './updateOrCreate';
 
 export const coursePost = async (ctx: Context) => {
   try {
-    const courseData = ctx.request.body.course;
+    const courseData = ctx.request.body;
 
     if (!courseData) {
       // eslint-disable-next-line
