@@ -223,4 +223,23 @@ describe('Test routes', () => {
       },
     });
   });
+
+  it('route PUT /courses:id', async () => {
+    const course = await createCourse();
+    const newCourse = { title: 'title updated', subtitle: 'subtitle updated', description: 'description updated' };
+
+    const response = await request(server)
+      .put(`/courses/${course._id}`)
+      .send(newCourse)
+      .set('Accept', 'application/json');
+    expect(response.status).toEqual(200);
+    expect(response.body).toMatchObject({
+      status: 'OK',
+      message: 'Course successfully updated',
+      course: {
+        isActive: true,
+        ...newCourse,
+      },
+    });
+  });
 });
