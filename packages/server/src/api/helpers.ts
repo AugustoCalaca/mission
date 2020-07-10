@@ -23,9 +23,9 @@ export const MESSAGE = {
 };
 
 export const getPageAndPageSize = (ctx: Context) => {
-  const { page = 1, pageSize = 10 } = ctx.query;
+  const { page = 0, pageSize = 10 } = ctx.query;
 
-  if (page < 1 || pageSize < 1) {
+  if (page < 0 || pageSize < 1) {
     return {
       skips: null,
       page: null,
@@ -40,7 +40,7 @@ export const getPageAndPageSize = (ctx: Context) => {
   }
 
   const pageInt = parseInt(page, 10);
-  const mongoSkips = (pageInt - 1) * pageSize;
+  const mongoSkips = pageInt * pageSize;
   const mongoLimit = parseInt(pageSize, 10);
 
   return {

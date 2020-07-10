@@ -6,8 +6,8 @@ import { disconnectMongoose, connectMongoose, clearDbAndRestartCounters, createC
 beforeAll(connectMongoose);
 beforeEach(clearDbAndRestartCounters);
 afterAll(() => {
-  disconnectMongoose();
   server.close();
+  disconnectMongoose();
 });
 
 describe('Test routes', () => {
@@ -49,7 +49,7 @@ describe('Test routes', () => {
       ],
       pageInfo: {
         errors: null,
-        page: 1,
+        page: 0,
         pageSize: 10, // default
         totalCount: 4,
         hasNextPage: false,
@@ -59,13 +59,48 @@ describe('Test routes', () => {
   });
 
   it('route GET /courses get just second page of the list', async () => {
+    const course5 = await createCourse(); // third page
+    const course4 = await createCourse(); // second page
+    const course3 = await createCourse(); // second page
+    const course2 = await createCourse(); // first page
+    const course1 = await createCourse(); // first page
+
+    const response = await request(server).get('/courses?page=1&pageSize=2').set('Accept', 'application/json');
+    expect(response.status).toEqual(200);
+    expect(response.body).toMatchObject({
+      status: 'OK',
+      courses: [
+        {
+          isActive: true,
+          title: course3.title,
+          subtitle: course3.subtitle,
+          description: course3.description,
+        },
+        {
+          isActive: true,
+          title: course4.title,
+          subtitle: course4.subtitle,
+          description: course4.description,
+        },
+      ],
+      pageInfo: {
+        errors: null,
+        page: 1,
+        totalCount: 5,
+        hasNextPage: true,
+        hasPreviousPage: true,
+      },
+    });
+  });
+
+  it('route GET /courses get simulate pagination action', async () => {
     const course5 = await createCourse();
     const course4 = await createCourse();
     const course3 = await createCourse();
     const course2 = await createCourse();
     const course1 = await createCourse();
 
-    const response1 = await request(server).get('/courses?page=1&pageSize=2').set('Accept', 'application/json');
+    const response1 = await request(server).get('/courses?page=0&pageSize=2').set('Accept', 'application/json');
     expect(response1.status).toEqual(200);
     expect(response1.body).toMatchObject({
       status: 'OK',
@@ -85,14 +120,14 @@ describe('Test routes', () => {
       ],
       pageInfo: {
         errors: null,
-        page: 1,
+        page: 0,
         totalCount: 5,
         hasNextPage: true,
         hasPreviousPage: false,
       },
     });
 
-    const response2 = await request(server).get('/courses?page=2&pageSize=2').set('Accept', 'application/json');
+    const response2 = await request(server).get('/courses?page=1&pageSize=2').set('Accept', 'application/json');
     expect(response2.status).toEqual(200);
     expect(response2.body).toMatchObject({
       status: 'OK',
@@ -112,14 +147,14 @@ describe('Test routes', () => {
       ],
       pageInfo: {
         errors: null,
-        page: 2,
+        page: 1,
         totalCount: 5,
         hasNextPage: true, // course5
         hasPreviousPage: true,
       },
     });
 
-    const response3 = await request(server).get('/courses?page=3&pageSize=2').set('Accept', 'application/json');
+    const response3 = await request(server).get('/courses?page=2&pageSize=2').set('Accept', 'application/json');
     expect(response3.status).toEqual(200);
     expect(response3.body).toMatchObject({
       status: 'OK',
@@ -133,7 +168,7 @@ describe('Test routes', () => {
       ],
       pageInfo: {
         errors: null,
-        page: 3,
+        page: 2,
         totalCount: 5,
         hasNextPage: false,
         hasPreviousPage: true,
@@ -142,10 +177,10 @@ describe('Test routes', () => {
   });
 
   it('route GET /courses/find', async () => {
-    const course1 = await createCourse();
+    const course4 = await createCourse();
     const course2 = await createCourse();
     const course3 = await createCourse({ title: 'finded' });
-    const course4 = await createCourse();
+    const course1 = await createCourse();
 
     const response = await request(server).get(`/courses/find`).query({ q: 'finded' });
     expect(response.status).toEqual(200);
@@ -161,7 +196,7 @@ describe('Test routes', () => {
       ],
       pageInfo: {
         errors: null,
-        page: 1,
+        page: 0,
         pageSize: 10,
         totalCount: 4,
         hasNextPage: false,
