@@ -6,7 +6,7 @@ import { updateOrCreate } from './updateOrCreate';
 import { isValidId } from './utils';
 
 export const coursePut = async (ctx: Context) => {
-  const courseData = ctx.request.body.course;
+  const courseData = ctx.request.body;
   const id = ctx.params.id;
 
   if (!isValidId(id)) {
