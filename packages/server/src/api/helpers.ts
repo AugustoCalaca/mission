@@ -51,7 +51,7 @@ export const getPageAndPageSize = (ctx: Context) => {
   };
 };
 
-export const getPageInfo = async (ctx: Context, model: Model<any>) => {
+export const getPageInfo = async (ctx: Context, model: Model<any>, where: object = {}) => {
   const { errors, skips, page, pageSize } = getPageAndPageSize(ctx);
 
   if (errors) {
@@ -66,7 +66,7 @@ export const getPageInfo = async (ctx: Context, model: Model<any>) => {
     };
   }
 
-  const totalCount = await model.count({});
+  const totalCount = await model.countDocuments({ ...where });
   const hasPreviousPage = skips > 0;
   const hasNextPage = skips + pageSize < totalCount;
 
