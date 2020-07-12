@@ -27,7 +27,6 @@
     "koa-bodyparser": "^4.2.1",
     "koa-convert": "^1.2.0",
     "koa-cors": "0.0.16",
-    "koa-graphql": "0.8.0",
     "koa-logger": "3.2.1",
     "mongoose": "^5.9.7",
     "pretty-format": "^26.0.1",
