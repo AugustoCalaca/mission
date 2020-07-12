@@ -26,7 +26,7 @@ interface IProps {
 }
 
 const validationSchema = yup.object().shape({
-  title: yup.string().min(3).max(20).required(),
+  title: yup.string().min(3).max(50).required(),
   subtitle: yup.string().min(3).max(200).required(),
   description: yup.string().min(3).max(500).required(),
 });
