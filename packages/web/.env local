@@ -1,0 +1,2 @@
+REACT_ENV=development
+REACT_API_ENDPOINT=http://localhost:4040
