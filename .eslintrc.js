@@ -28,6 +28,7 @@ module.exports = {
     '@typescript-eslint/explicit-member-accessibility': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/ban-ts-ignore': 'off',
+    '@typescript-eslint/no-empty-function': 'warn',
     '@typescript-eslint/camelcase': ['off', { ignoreDestructuring: true }],
     'import/named': 'off',
     'no-console': 'error',
