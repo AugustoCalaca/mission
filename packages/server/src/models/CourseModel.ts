@@ -5,16 +5,17 @@ const CourseSchema = new mongoose.Schema(
     title: {
       type: String,
       required: true,
-      index: true,
+      trim: true,
       default: 'Awesome title',
     },
     subtitle: {
       type: String,
       required: true,
-      index: true,
+      trim: true,
       default: 'Awesome subtitle',
     },
     description: {
+      trim: true,
       type: String,
       required: true,
       default: 'Awesome description',
@@ -47,8 +48,6 @@ export interface ICourse extends Document {
   createdAt: Date;
   updatedAt: Date;
 }
-
-CourseSchema.index({ title: 'text', subtitle: 'text' });
 
 const CourseModel: Model<ICourse> = mongoose.model('Course', CourseSchema);
 

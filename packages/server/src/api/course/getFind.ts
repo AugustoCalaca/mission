@@ -16,7 +16,22 @@ export const coursesGetFind = async (ctx: Context) => {
     return;
   }
 
-  const pageInfo = await getPageInfo(ctx, CourseModel);
+  const where = {
+    $or: [
+      {
+        title: {
+          $regex: new RegExp(`^${q}`, 'ig'),
+        },
+      },
+      {
+        subtitle: {
+          $regex: new RegExp(`^${q}`, 'ig'),
+        },
+      },
+    ],
+  };
+
+  const pageInfo = await getPageInfo(ctx, CourseModel, where);
 
   if (pageInfo.errors) {
     ctx.status = 400;
@@ -27,12 +42,6 @@ export const coursesGetFind = async (ctx: Context) => {
 
     return;
   }
-
-  const where = {
-    $text: {
-      $search: q,
-    },
-  };
 
   const courses = await CourseModel.find(where).skip(pageInfo.page).limit(pageInfo.pageSize).sort({ createdAt: -1 });
 

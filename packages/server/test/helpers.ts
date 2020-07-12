@@ -7,8 +7,9 @@ const mongooseOptions = {
   connectTimeoutMS: 10000,
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useFindAndModify: true,
+  useFindAndModify: false,
   useCreateIndex: true,
+  autoIndex: false,
 };
 
 export * from './createResource/createCourse';
