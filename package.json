@@ -51,16 +51,21 @@
       "git add"
     ]
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "concurrently -r \"yarn lint\""
+    }
+  },
   "dependencies": {},
   "devDependencies": {
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^8.1.0",
-    "@react-native-community/eslint-config": "^1.1.0",
     "@types/jest": "^25.2.1",
     "@typescript-eslint/eslint-plugin": "^2.5.0",
     "@typescript-eslint/parser": "^2.5.0",
+    "concurrently": "5.1.0",
     "dotenv-safe": "8.2.0",
-    "eslint": "^7.0.0",
+    "eslint": "^7.4.0",
     "eslint-config-airbnb": "18.1.0",
     "eslint-config-prettier": "^6.3.0",
     "eslint-import-resolver-typescript": "^2.0.0",
