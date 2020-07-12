@@ -1,0 +1,22 @@
+{
+  "name": "@mission/babel-web",
+  "version": "1.0.0",
+  "description": "Babel-Web",
+  "main": "index.js",
+  "author": "Augusto Calaca",
+  "dependencies": {
+    "@babel/cli": "^7.6.2",
+    "@babel/core": "^7.6.2",
+    "@babel/plugin-proposal-class-properties": "7.8.3",
+    "@babel/plugin-proposal-export-default-from": "7.8.3",
+    "@babel/plugin-proposal-export-namespace-from": "7.8.3",
+    "@babel/plugin-transform-react-jsx-source": "7.9.0",
+    "@babel/plugin-transform-runtime": "^7.10.4",
+    "@babel/plugin-transform-typescript": "^7.6.3",
+    "@babel/polyfill": "^7.10.4",
+    "@babel/preset-env": "^7.6.2",
+    "@babel/preset-react": "^7.6.3",
+    "@babel/preset-typescript": "7.9.0",
+    "babel-loader": "^8.1.0"
+  }
+}
