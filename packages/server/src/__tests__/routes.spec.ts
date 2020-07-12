@@ -182,7 +182,7 @@ describe('Test routes', () => {
     const course3 = await createCourse({ title: 'finded' });
     const course1 = await createCourse();
 
-    const response = await request(server).get(`/courses/find`).query({ q: 'finded' });
+    const response = await request(server).get(`/courses/find?q=${course3.title}`);
     expect(response.status).toEqual(200);
     expect(response.body).toMatchObject({
       status: 'OK',
@@ -198,7 +198,7 @@ describe('Test routes', () => {
         errors: null,
         page: 0,
         pageSize: 10,
-        totalCount: 4,
+        totalCount: 1,
         hasNextPage: false,
         hasPreviousPage: false,
       },
